@@ -3,15 +3,12 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        <mapping resource="hbm/Ciudad.hbm.xml"/>
+        <mapping resource="hbm/Cliente.hbm.xml"/>
+        <mapping resource="hbm/DetalleVenta.hbm.xml"/>
+        <mapping resource="hbm/Pais.hbm.xml"/>
         <mapping resource="hbm/Producto.hbm.xml"/>
-        
-
-        <!--  Relational hbm -->
-<!--         <mapping resource="hbm/relational/ResourceSkill.hbm.xml" /> -->
-        
-
-        <!--  Maestros hbm -->
-<!--         <mapping resource="hbm/maestros/City.hbm.xml" /> -->
-        
+        <mapping resource="hbm/Provincia.hbm.xml"/>
+        <mapping resource="hbm/Venta.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="com.rafavillamizar.gestionventas.entidad.Ciudad"
+		table="ciudad" entity-name="Ciudad">
+		<id name="ciudadId" type="java.lang.Integer">
+			<column name="ciudadId" />
+			<generator class="identity" />
+		</id>
+		<many-to-one name="provincia" column="provinciaId" entity-name="Provincia"/>
+		<property name="nombre" type="java.lang.String">
+			<column name="nombre" />
+		</property>
+	</class>
+
+</hibernate-mapping>

@@ -13,6 +13,12 @@
 		<property name="nombre" type="java.lang.String">
 			<column name="nombre" />
 		</property>
+		<property name="imagen" type="java.lang.String">
+			<column name="imagen" />
+		</property>
+		<property name="precio" type="java.lang.Integer">
+			<column name="precio" />
+		</property>
 	</class>
 
 </hibernate-mapping>

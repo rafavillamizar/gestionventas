@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="com.rafavillamizar.gestionventas.entidad.Venta"
+		table="venta" entity-name="Venta">
+		<id name="ventaId" type="java.lang.Integer">
+			<column name="ventaId" />
+			<generator class="identity" />
+		</id>
+		<property name="fechaVenta" type="java.util.Date">
+			<column name="fechaVenta" />
+		</property>
+		<many-to-one name="cliente" column="clienteId" entity-name="Cliente"/>
+	</class>
+
+</hibernate-mapping>

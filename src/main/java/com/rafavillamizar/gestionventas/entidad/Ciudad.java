@@ -3,7 +3,7 @@ package com.rafavillamizar.gestionventas.entidad;
 public class Ciudad {
 
 	private Integer ciudadId;
-	private Integer provinciaId;
+	private Provincia provincia;
 	private String nombre;
 
 	public Integer getCiudadId() {
@@ -12,11 +12,11 @@ public class Ciudad {
 	public void setCiudadId(Integer ciudadId) {
 		this.ciudadId = ciudadId;
 	}
-	public Integer getProvinciaId() {
-		return provinciaId;
+	public Provincia getProvincia() {
+		return provincia;
 	}
-	public void setProvinciaId(Integer provinciaId) {
-		this.provinciaId = provinciaId;
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
 	}
 	public String getNombre() {
 		return nombre;
