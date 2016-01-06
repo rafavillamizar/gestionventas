@@ -1,8 +1,11 @@
 package com.rafavillamizar.gestionventas.entidad;
 
+import org.codehaus.jackson.map.annotate.JsonFilter;
+
+@JsonFilter("filtroJsonProducto")
 public class Producto {
 	private Integer productoId;
-    private Integer name;
+    private String name;
     
 	public Integer getProductoId() {
 		return productoId;
@@ -10,10 +13,10 @@ public class Producto {
 	public void setProductoId(Integer productoId) {
 		this.productoId = productoId;
 	}
-	public Integer getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(Integer name) {
+	public void setName(String name) {
 		this.name = name;
 	}
     

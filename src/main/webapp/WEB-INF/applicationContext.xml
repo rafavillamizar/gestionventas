@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -9,7 +10,9 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd 
 		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 <!-- 	<import resource="classpath:millionmindclub-aspects.xml" /> -->
 <!-- 	<import resource="classpath:millionmindclub-context.xml" /> -->
@@ -18,13 +21,10 @@
 	<!-- Configure annotated beans -->
     <context:annotation-config />
     <context:spring-configured />
+    
+    <mvc:annotation-driven />
 
-<!-- 	<context:component-scan base-package="com.businessinria.millionmindclub.model" /> -->
-<!-- 	<context:component-scan base-package="com.businessinria.millionmindclub.dao" /> -->
-<!-- 	<context:component-scan base-package="com.businessinria.millionmindclub.services" /> -->
-<!-- 	<context:component-scan base-package="com.businessinria.millionmindclub.facades" > -->
-<!-- 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
-<!-- 	</context:component-scan> -->
+	<context:component-scan base-package="com.rafavillamizar.gestionventas" />
 
 <!--     <import resource="classpath:millionmindclub-security.xml" /> -->
 <!-- 	<import resource="classpath:millionmindclub-flex.xml" /> -->
@@ -34,7 +34,7 @@
 <!--         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/> -->
 <!--     </context:component-scan> -->
 
-<!-- 	<mvc:annotation-driven /> -->
+<!-- 	 -->
 
 <bean id="gestionVentasDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
