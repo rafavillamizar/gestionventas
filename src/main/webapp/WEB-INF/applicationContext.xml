@@ -14,10 +14,6 @@
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-<!-- 	<import resource="classpath:millionmindclub-aspects.xml" /> -->
-<!-- 	<import resource="classpath:millionmindclub-context.xml" /> -->
-<!-- 	<import resource="classpath:millionmindclub-mail.xml" /> -->
-
 	<!-- Configure annotated beans -->
     <context:annotation-config />
     <context:spring-configured />
@@ -25,16 +21,6 @@
     <mvc:annotation-driven />
 
 	<context:component-scan base-package="com.rafavillamizar.gestionventas" />
-
-<!--     <import resource="classpath:millionmindclub-security.xml" /> -->
-<!-- 	<import resource="classpath:millionmindclub-flex.xml" /> -->
-
-<!-- <context:component-scan base-package="com.businessinria.millionmindclub.controller" /> -->
-<!--     <context:component-scan base-package="com.businessinria.millionmindclub.facades"> -->
-<!--         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/> -->
-<!--     </context:component-scan> -->
-
-<!-- 	 -->
 
 <bean id="gestionVentasDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>

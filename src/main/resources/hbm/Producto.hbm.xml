@@ -10,8 +10,8 @@
 			<column name="productoId" />
 			<generator class="identity" />
 		</id>
-		<property name="name" type="java.lang.String">
-			<column name="name" />
+		<property name="nombre" type="java.lang.String">
+			<column name="nombre" />
 		</property>
 	</class>
 
