@@ -5,7 +5,8 @@
 <hibernate-mapping>
 
 	<class name="com.rafavillamizar.gestionventas.entidad.Ciudad"
-		table="ciudad" entity-name="Ciudad">
+		table="ciudad" entity-name="Ciudad"
+		lazy="false">
 		<id name="ciudadId" type="java.lang.Integer">
 			<column name="ciudadId" />
 			<generator class="identity" />
@@ -15,5 +16,27 @@
 			<column name="nombre" />
 		</property>
 	</class>
+	
+<!-- 	<sql-query name="obtenerCiudades"> -->
+<!--         <return-scalar column="ciudadId" type="java.lang.Integer"/> -->
+<!--         <return-scalar column="nombre" type="java.lang.String"/> -->
+<!--         <return-scalar column="nombreProvincia" type="java.lang.String"/> -->
+<!--         <return-scalar column="nombrePais" type="java.lang.String"/> -->
+<!--         SELECT  -->
+<!--         	c.ciudadId as ciudadId,  -->
+<!--         	c.nombre as nombre,  -->
+<!--         	pr.nombre as nombreProvincia,  -->
+<!--         	p.nombre as nombrePais -->
+<!--         FROM  -->
+<!--         	ciudad c  -->
+<!--         INNER JOIN  -->
+<!--         	provincia pr  -->
+<!--         ON  -->
+<!--         	c.provinciaId = pr.provinciaId  -->
+<!--         INNER JOIN  -->
+<!--         	pais p  -->
+<!--         ON  -->
+<!--         	pr.paisId = p.paisId -->
+<!--     </sql-query> -->
 
 </hibernate-mapping>

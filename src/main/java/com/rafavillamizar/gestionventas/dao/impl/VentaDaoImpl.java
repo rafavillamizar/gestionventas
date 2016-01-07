@@ -14,6 +14,21 @@ public class VentaDaoImpl extends DaoGenericoImpl<Venta> implements VentaDao {
 	public List<Venta> obtenerVentas() {
 		return obtenerTodos("Venta");
 	}
+
+	@Override
+	public void guardarVenta(Venta venta) {
+		guardar("Venta", venta);
+	}
+
+	@Override
+	public void actualizarVenta(Venta venta) {
+		actualizar("Venta", venta);
+	}
+
+	@Override
+	public void eliminarVenta(Venta venta) {
+		eliminar("Venta", venta);
+	}
 	
 
 }

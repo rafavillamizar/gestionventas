@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rafavillamizar.gestionventas.entidad.Ciudad;
-import com.rafavillamizar.gestionventas.json.FiltroJsonProducto;
+import com.rafavillamizar.gestionventas.json.FiltroJsonCiudad;
 import com.rafavillamizar.gestionventas.servicio.CiudadServicio;
 import com.rafavillamizar.gestionventas.util.JsonUtils;
 
@@ -31,14 +31,14 @@ public class CiudadFachadaImpl {
 			throws JsonGenerationException, JsonMappingException, IOException {
 		List<Ciudad> ciudades = ciudadServicio.obtenerCiudades();
 
-		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonProductos(),
+		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonCiudad(),
 				ciudades, response);
 	}
 	
-	private SimpleFilterProvider obtenerFiltrosJsonProductos()
+	private SimpleFilterProvider obtenerFiltrosJsonCiudad()
 			throws JsonGenerationException, JsonMappingException, IOException {
 		SimpleFilterProvider filters = new SimpleFilterProvider();
-		filters.addFilter("filtroJsonProducto", new FiltroJsonProducto());
+		filters.addFilter("filtroJsonCiudad", new FiltroJsonCiudad());
 
 		return filters;
 	}

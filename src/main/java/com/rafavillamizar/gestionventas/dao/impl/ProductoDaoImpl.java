@@ -15,4 +15,19 @@ public class ProductoDaoImpl extends DaoGenericoImpl<Producto> implements Produc
 		return obtenerTodos("Producto");
 	}
 
+	@Override
+	public void guardarProducto(Producto producto) {
+		guardar("Producto", producto);
+	}
+
+	@Override
+	public void actualizarProducto(Producto producto) {
+		actualizar("Producto", producto);
+	}
+
+	@Override
+	public void eliminarProducto(Producto producto) {
+		eliminar("Producto", producto);
+	}
+
 }

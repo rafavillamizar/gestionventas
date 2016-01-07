@@ -7,5 +7,7 @@ import com.rafavillamizar.gestionventas.entidad.Cliente;
 public interface ClienteServicio {
 	
 	List<Cliente> obtenerClientes();
-
+	void guardarCliente(Cliente cliente);
+    void actualizarCliente(Cliente cliente);
+	void eliminarCliente(Integer clienteId);
 }

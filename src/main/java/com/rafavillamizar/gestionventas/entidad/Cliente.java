@@ -1,5 +1,8 @@
 package com.rafavillamizar.gestionventas.entidad;
 
+import org.codehaus.jackson.map.annotate.JsonFilter;
+
+@JsonFilter("filtroJsonCliente")
 public class Cliente {
 
 	private Integer clienteId;

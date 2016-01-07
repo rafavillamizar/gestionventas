@@ -8,17 +8,17 @@ import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.ser.BeanPropertyWriter;
 import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
 
-import com.rafavillamizar.gestionventas.entidad.Producto;
+import com.rafavillamizar.gestionventas.entidad.Venta;
 
-public class FiltroJsonProducto extends SimpleBeanPropertyFilter {
-	private List<String> propiedadesProducto = Arrays.asList("productoId", "nombre", "imagen", "precio");
+public class FiltroJsonVenta extends SimpleBeanPropertyFilter {
+	private List<String> propiedadesVenta = Arrays.asList("ventaId", "fechaVenta", "cliente");
 
 	@Override
 	public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider provider, BeanPropertyWriter writer) throws Exception 
 	{
-		if (pojo instanceof Producto)
+		if (pojo instanceof Venta)
 		{
-			if (propiedadesProducto.contains(writer.getName()))
+			if (propiedadesVenta.contains(writer.getName()))
 			{
 				writer.serializeAsField(pojo, jgen, provider);
 			}

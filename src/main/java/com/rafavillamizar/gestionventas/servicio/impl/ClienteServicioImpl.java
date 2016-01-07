@@ -20,4 +20,19 @@ public class ClienteServicioImpl implements ClienteServicio {
 		return clienteDao.obtenerClientes();
 	}
 
+	@Override
+	public void guardarCliente(Cliente cliente) {
+		clienteDao.guardarCliente(cliente);
+	}
+
+	@Override
+	public void actualizarCliente(Cliente cliente) {
+		clienteDao.actualizarCliente(cliente);
+	}
+
+	@Override
+	public void eliminarCliente(Integer clienteId) {
+		// TODO Auto-generated method stub
+	}
+
 }

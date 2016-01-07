@@ -14,5 +14,20 @@ public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteD
 	public List<Cliente> obtenerClientes() {
 		return obtenerTodos("Cliente");
 	}
+
+	@Override
+	public void guardarCliente(Cliente cliente) {
+		guardar("Cliente", cliente);
+	}
+
+	@Override
+	public void actualizarCliente(Cliente cliente) {
+		actualizar("Cliente", cliente);
+	}
+
+	@Override
+	public void eliminarCliente(Cliente cliente) {
+		eliminar("Cliente", cliente);
+	}
 	
 }

@@ -2,6 +2,9 @@ package com.rafavillamizar.gestionventas.entidad;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonFilter;
+
+@JsonFilter("filtroJsonVenta")
 public class Venta {
 
 	private Integer ventaId;

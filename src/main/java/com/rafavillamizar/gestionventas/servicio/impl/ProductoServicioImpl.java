@@ -20,4 +20,19 @@ public class ProductoServicioImpl implements ProductoServicio {
 		return productoDao.obtenerProductos();
 	}
 
+	@Override
+	public void guardarProducto(Producto producto) {
+		productoDao.guardarProducto(producto);
+	}
+
+	@Override
+	public void actualizarProducto(Producto producto) {
+		productoDao.actualizarProducto(producto);
+	}
+
+	@Override
+	public void eliminarProducto(Integer productoId) {
+		// TODO Auto-generated method stub
+	}
+
 }

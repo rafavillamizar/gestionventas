@@ -1,10 +1,13 @@
 package com.rafavillamizar.gestionventas.entidad;
 
+import org.codehaus.jackson.map.annotate.JsonFilter;
+
+@JsonFilter("filtroJsonDetalleVenta")
 public class DetalleVenta {
 	
 	private Integer detalleVentaId;
 	private Integer ventaId;
-	private Producto productoId;
+	private Producto producto;
 	private Integer cantidad;
 
 	public Integer getDetalleVentaId() {
@@ -19,11 +22,11 @@ public class DetalleVenta {
 	public void setVentaId(Integer ventaId) {
 		this.ventaId = ventaId;
 	}
-	public Producto getProductoId() {
-		return productoId;
+	public Producto getProducto() {
+		return producto;
 	}
-	public void setProductoId(Producto productoId) {
-		this.productoId = productoId;
+	public void setProducto(Producto producto) {
+		this.producto = producto;
 	}
 	public Integer getCantidad() {
 		return cantidad;

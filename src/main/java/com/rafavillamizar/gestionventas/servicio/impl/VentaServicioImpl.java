@@ -20,4 +20,19 @@ public class VentaServicioImpl implements VentaServicio {
 		return ventaDao.obtenerVentas();
 	}
 
+	@Override
+	public void guardarVenta(Venta venta) {
+		ventaDao.guardarVenta(venta);
+	}
+
+	@Override
+	public void actualizarVenta(Venta venta) {
+		ventaDao.actualizarVenta(venta);
+	}
+
+	@Override
+	public void eliminarVenta(Integer ventaId) {
+		// TODO Auto-generated method stub
+	}
+
 }

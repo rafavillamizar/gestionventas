@@ -5,7 +5,8 @@
 <hibernate-mapping>
 
 	<class name="com.rafavillamizar.gestionventas.entidad.Producto"
-		table="producto" entity-name="Producto">
+		table="producto" entity-name="Producto"
+		lazy="false">
 		<id name="productoId" type="java.lang.Integer">
 			<column name="productoId" />
 			<generator class="identity" />

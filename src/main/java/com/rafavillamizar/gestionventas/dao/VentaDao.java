@@ -7,5 +7,7 @@ import com.rafavillamizar.gestionventas.entidad.Venta;
 public interface VentaDao {
 	
     List<Venta> obtenerVentas();
-
+    void guardarVenta(Venta venta);
+    void actualizarVenta(Venta venta);
+	void eliminarVenta(Venta venta);
 }
