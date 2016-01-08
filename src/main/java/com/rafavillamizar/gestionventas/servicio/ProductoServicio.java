@@ -8,6 +8,5 @@ public interface ProductoServicio {
 	
 	List<Producto> obtenerProductos();
 	void guardarProducto(Producto producto);
-    void actualizarProducto(Producto producto);
 	void eliminarProducto(Integer productoId);
 }

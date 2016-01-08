@@ -42,13 +42,14 @@ public class DaoGenericoImpl<E> implements DaoGenerico<E> {
 	}
 	
 	@Override
-    public void guardar(String entityName, E instancia) {
-        getSession().persist(entityName, instancia);
+    @SuppressWarnings("unchecked")
+    public E obtenerById(String entityName, Integer id) {
+        return (E) getSession().get(entityName, id);
     }
 	
 	@Override
-    public void actualizar(String entityName, E instancia) {
-        getSession().update(entityName, instancia);
+    public void guardar(String entityName, E instancia) {
+        getSession().saveOrUpdate(entityName, instancia);
     }
 	
 	@Override

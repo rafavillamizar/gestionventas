@@ -8,6 +8,5 @@ public interface VentaServicio {
 	
 	List<Venta> obtenerVentas();
 	void guardarVenta(Venta venta);
-    void actualizarVenta(Venta venta);
 	void eliminarVenta(Integer ventaId);
 }

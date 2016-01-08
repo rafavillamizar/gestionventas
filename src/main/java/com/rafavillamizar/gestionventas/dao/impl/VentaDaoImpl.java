@@ -21,11 +21,6 @@ public class VentaDaoImpl extends DaoGenericoImpl<Venta> implements VentaDao {
 	}
 
 	@Override
-	public void actualizarVenta(Venta venta) {
-		actualizar("Venta", venta);
-	}
-
-	@Override
 	public void eliminarVenta(Venta venta) {
 		eliminar("Venta", venta);
 	}

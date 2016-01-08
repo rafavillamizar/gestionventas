@@ -45,7 +45,7 @@ public class ProductoFachadaImpl {
     {
 		Producto producto = new Producto();
 		producto.setNombre((String)data.get("nombre"));
-		producto.setPrecio(Integer.parseInt((String)data.get("precio")));
+		producto.setPrecio((Integer)data.get("precio"));
 
 		productoServicio.guardarProducto(producto);
 		

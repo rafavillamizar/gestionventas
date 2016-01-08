@@ -21,11 +21,6 @@ public class DetalleVentaDaoImpl extends DaoGenericoImpl<DetalleVenta> implement
 	}
 
 	@Override
-	public void actualizarDetalleVenta(DetalleVenta detalleVenta) {
-		actualizar("DetalleVenta", detalleVenta);
-	}
-
-	@Override
 	public void eliminarDetalleVenta(DetalleVenta detalleVenta) {
 		eliminar("DetalleVenta", detalleVenta);
 	}

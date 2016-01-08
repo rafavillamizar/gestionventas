@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rafavillamizar.gestionventas.dao.VentaDao;
 import com.rafavillamizar.gestionventas.entidad.Venta;
@@ -15,21 +16,19 @@ public class VentaServicioImpl implements VentaServicio {
 	@Autowired(required = true)
     private VentaDao ventaDao;
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Venta> obtenerVentas() {
 		return ventaDao.obtenerVentas();
 	}
 
+	@Transactional
 	@Override
 	public void guardarVenta(Venta venta) {
 		ventaDao.guardarVenta(venta);
 	}
 
-	@Override
-	public void actualizarVenta(Venta venta) {
-		ventaDao.actualizarVenta(venta);
-	}
-
+	@Transactional(readOnly=true)
 	@Override
 	public void eliminarVenta(Integer ventaId) {
 		// TODO Auto-generated method stub

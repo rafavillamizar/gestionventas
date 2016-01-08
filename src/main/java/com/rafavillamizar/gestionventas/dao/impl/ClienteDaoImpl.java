@@ -21,11 +21,6 @@ public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteD
 	}
 
 	@Override
-	public void actualizarCliente(Cliente cliente) {
-		actualizar("Cliente", cliente);
-	}
-
-	@Override
 	public void eliminarCliente(Cliente cliente) {
 		eliminar("Cliente", cliente);
 	}

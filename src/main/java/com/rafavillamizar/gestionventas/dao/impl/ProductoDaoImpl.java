@@ -21,13 +21,12 @@ public class ProductoDaoImpl extends DaoGenericoImpl<Producto> implements Produc
 	}
 
 	@Override
-	public void actualizarProducto(Producto producto) {
-		actualizar("Producto", producto);
-	}
-
-	@Override
-	public void eliminarProducto(Producto producto) {
-		eliminar("Producto", producto);
+	public void eliminarProducto(Integer productoId) {
+		String productoEntityName = "Producto";
+		Producto producto = obtenerById(productoEntityName, productoId);
+		
+		if(producto != null)
+			eliminar(productoEntityName, producto);
 	}
 
 }
