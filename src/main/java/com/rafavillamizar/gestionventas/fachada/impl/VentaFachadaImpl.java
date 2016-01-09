@@ -2,6 +2,7 @@ package com.rafavillamizar.gestionventas.fachada.impl;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -22,7 +23,10 @@ import com.rafavillamizar.gestionventas.entidad.Cliente;
 import com.rafavillamizar.gestionventas.entidad.Venta;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCiudad;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCliente;
+import com.rafavillamizar.gestionventas.json.FiltroJsonDetalleVenta;
+import com.rafavillamizar.gestionventas.json.FiltroJsonProducto;
 import com.rafavillamizar.gestionventas.json.FiltroJsonVenta;
+import com.rafavillamizar.gestionventas.servicio.DetalleVentaServicio;
 import com.rafavillamizar.gestionventas.servicio.VentaServicio;
 import com.rafavillamizar.gestionventas.util.JsonUtils;
 
@@ -32,11 +36,20 @@ public class VentaFachadaImpl {
 	@Resource
     private VentaServicio ventaServicio;
 
+	@Resource
+	private DetalleVentaServicio detalleVentaServicio;
+
 	@RequestMapping(value = "/ventas", method = RequestMethod.GET)
 	public @ResponseBody
 	void obtenerProductos(HttpServletResponse response)
 			throws JsonGenerationException, JsonMappingException, IOException {
 		List<Venta> ventas = ventaServicio.obtenerVentas();
+		
+		if(ventas != null && ventas.size() > 0) {
+			for (Venta venta : ventas) {
+				venta.setDetalles(detalleVentaServicio.obtenerDetallesVenta(venta.getVentaId()));
+			}
+		}
 
 		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonVenta(),
 				ventas, response);
@@ -48,12 +61,18 @@ public class VentaFachadaImpl {
     				 throws JsonGenerationException, JsonMappingException, IOException 
     {
 		Venta venta = new Venta();
+		venta.setVentaId(((Integer)data.get("ventaId") != null) ? (Integer)data.get("ventaId") : null);
 		
 		Cliente cliente = new Cliente();
-		cliente.setClienteId(Integer.parseInt((String)data.get("clienteId")));
+		@SuppressWarnings("unchecked")
+		LinkedHashMap<String, Object> clienteObj = (LinkedHashMap<String, Object>)data.get("cliente");
+		cliente.setClienteId((Integer)clienteObj.get("clienteId"));
 		
 		venta.setCliente(cliente);
-		venta.setFechaVenta(Calendar.getInstance().getTime());
+		
+		Calendar date = GregorianCalendar.getInstance();
+		date.setTimeInMillis((Long)data.get("fechaVenta"));
+		venta.setFechaVenta(date.getTime());
     	
 		ventaServicio.guardarVenta(venta);
 		
@@ -73,6 +92,8 @@ public class VentaFachadaImpl {
 		filters.addFilter("filtroJsonVenta", new FiltroJsonVenta());
 		filters.addFilter("filtroJsonCliente", new FiltroJsonCliente());
 		filters.addFilter("filtroJsonCiudad", new FiltroJsonCiudad());
+		filters.addFilter("filtroJsonDetalleVenta", new FiltroJsonDetalleVenta());
+		filters.addFilter("filtroJsonProducto", new FiltroJsonProducto());
 
 		return filters;
 	}

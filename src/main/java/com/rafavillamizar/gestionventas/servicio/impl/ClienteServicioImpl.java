@@ -18,8 +18,8 @@ public class ClienteServicioImpl implements ClienteServicio {
 
 	@Transactional(readOnly=true)
 	@Override
-	public List<Cliente> obtenerClientes() {
-		return clienteDao.obtenerClientes();
+	public List<Cliente> obtenerClientes(String nif) {
+		return clienteDao.obtenerClientes(nif);
 	}
 
 	@Transactional
@@ -31,7 +31,7 @@ public class ClienteServicioImpl implements ClienteServicio {
 	@Transactional
 	@Override
 	public void eliminarCliente(Integer clienteId) {
-		// TODO Auto-generated method stub
+		clienteDao.eliminarCliente(clienteId);
 	}
 
 }

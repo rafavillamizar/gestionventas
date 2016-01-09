@@ -11,8 +11,11 @@ import com.rafavillamizar.gestionventas.entidad.Cliente;
 public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteDao {
 
 	@Override
-	public List<Cliente> obtenerClientes() {
-		return obtenerTodos("Cliente");
+	public List<Cliente> obtenerClientes(String nif) {
+		if(nif != null && !nif.isEmpty())
+			return obtenerTodosPorPropiedad("Cliente", "nif", nif);
+		else
+			return obtenerTodos("Cliente");
 	}
 
 	@Override
@@ -21,8 +24,12 @@ public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteD
 	}
 
 	@Override
-	public void eliminarCliente(Cliente cliente) {
-		eliminar("Cliente", cliente);
+	public void eliminarCliente(Integer clienteId) {
+		String clienteEntityName = "Cliente";
+		Cliente cliente = obtenerById(clienteEntityName, clienteId);
+		
+		if(cliente != null)
+			eliminar("Cliente", cliente);
 	}
 	
 }

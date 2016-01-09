@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.ser.impl.SimpleFilterProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rafavillamizar.gestionventas.entidad.Ciudad;
@@ -27,9 +28,11 @@ public class CiudadFachadaImpl {
 
 	@RequestMapping(value = "/ciudades", method = RequestMethod.GET)
 	public @ResponseBody
-	void obtenerCiudades(HttpServletResponse response)
+	void obtenerCiudades(@RequestParam(value = "nombre", required = true, defaultValue = "") String nombre, 
+			HttpServletResponse response)
 			throws JsonGenerationException, JsonMappingException, IOException {
-		List<Ciudad> ciudades = ciudadServicio.obtenerCiudades();
+		
+		List<Ciudad> ciudades = ciudadServicio.obtenerCiudadesPorNombre(nombre);
 
 		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonCiudad(),
 				ciudades, response);

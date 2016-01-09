@@ -44,6 +44,7 @@ public class ProductoFachadaImpl {
     				 throws JsonGenerationException, JsonMappingException, IOException 
     {
 		Producto producto = new Producto();
+		producto.setProductoId(((Integer)data.get("productoId") != null) ? (Integer)data.get("productoId") : null);
 		producto.setNombre((String)data.get("nombre"));
 		producto.setPrecio((Integer)data.get("precio"));
 

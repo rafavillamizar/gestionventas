@@ -21,8 +21,12 @@ public class VentaDaoImpl extends DaoGenericoImpl<Venta> implements VentaDao {
 	}
 
 	@Override
-	public void eliminarVenta(Venta venta) {
-		eliminar("Venta", venta);
+	public void eliminarVenta(Integer ventaId) {
+		String ventaEntityName = "Venta";
+		Venta venta = obtenerById(ventaEntityName, ventaId);
+		
+		if(venta != null)
+			eliminar(ventaEntityName, venta);
 	}
 	
 

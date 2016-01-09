@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rafavillamizar.gestionventas.entidad.Ciudad;
@@ -32,9 +33,10 @@ public class ClienteFachadaImpl {
 
 	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
 	public @ResponseBody
-	void obtenerProductos(HttpServletResponse response)
+	void obtenerProductos(@RequestParam(value = "nif", required = false, defaultValue = "") String nif, 
+			HttpServletResponse response)
 			throws JsonGenerationException, JsonMappingException, IOException {
-		List<Cliente> clientes = clienteServicio.obtenerClientes();
+		List<Cliente> clientes = clienteServicio.obtenerClientes(nif);
 
 		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonCliente(),
 				clientes, response);
@@ -46,14 +48,18 @@ public class ClienteFachadaImpl {
     				 throws JsonGenerationException, JsonMappingException, IOException 
     {
     	Cliente cliente = new Cliente();
+    	cliente.setClienteId(((Integer)data.get("clienteId") != null) ? (Integer)data.get("clienteId") : null);
     	cliente.setNif((String)data.get("nif"));
     	cliente.setEmail((String)data.get("email"));
     	cliente.setNombre((String)data.get("nombre"));
     	cliente.setApellido1((String)data.get("apellido1"));
     	cliente.setApellido2((String)data.get("apellido2"));
+    	cliente.setDireccion((String)data.get("direccion"));
     	
     	Ciudad ciudad = new Ciudad();
-    	ciudad.setCiudadId(Integer.parseInt((String)data.get("ciudadId")));
+    	@SuppressWarnings("unchecked")
+		LinkedHashMap<String, Object> ciudadObj = (LinkedHashMap<String, Object>)data.get("ciudad");
+    	ciudad.setCiudadId((Integer)ciudadObj.get("ciudadId"));
     	
     	cliente.setCiudad(ciudad);
     	

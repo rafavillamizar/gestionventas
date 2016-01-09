@@ -8,5 +8,5 @@ public interface VentaDao {
 	
     List<Venta> obtenerVentas();
     void guardarVenta(Venta venta);
-	void eliminarVenta(Venta venta);
+	void eliminarVenta(Integer ventaId);
 }

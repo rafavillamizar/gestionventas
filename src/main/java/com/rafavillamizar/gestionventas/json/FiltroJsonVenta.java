@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
 import com.rafavillamizar.gestionventas.entidad.Venta;
 
 public class FiltroJsonVenta extends SimpleBeanPropertyFilter {
-	private List<String> propiedadesVenta = Arrays.asList("ventaId", "fechaVenta", "cliente");
+	private List<String> propiedadesVenta = Arrays.asList("ventaId", "fechaVenta", "cliente", "detalles");
 
 	@Override
 	public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider provider, BeanPropertyWriter writer) throws Exception 

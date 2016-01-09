@@ -18,8 +18,8 @@ public class CiudadServicioImpl implements CiudadServicio {
 
 	@Transactional(readOnly=true)
 	@Override
-	public List<Ciudad> obtenerCiudades() {
-		return ciudadDao.obtenerCiudades();
+	public List<Ciudad> obtenerCiudadesPorNombre(String nombre) {
+		return ciudadDao.obtenerCiudadesPorNombre(nombre);
 	}
 
 }

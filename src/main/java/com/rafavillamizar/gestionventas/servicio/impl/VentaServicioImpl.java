@@ -28,10 +28,10 @@ public class VentaServicioImpl implements VentaServicio {
 		ventaDao.guardarVenta(venta);
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional
 	@Override
 	public void eliminarVenta(Integer ventaId) {
-		// TODO Auto-generated method stub
+		ventaDao.eliminarVenta(ventaId);
 	}
 
 }

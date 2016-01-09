@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ser.impl.SimpleBeanPropertyFilter;
 import com.rafavillamizar.gestionventas.entidad.Ciudad;
 
 public class FiltroJsonCiudad extends SimpleBeanPropertyFilter {
-	private List<String> propiedadesCiudad = Arrays.asList("ciudadId", "nombreCiudad", "nombreProvincia", "nombrePais");
+	private List<String> propiedadesCiudad = Arrays.asList("ciudadId", "nombreLocalizacion");
 
 	@Override
 	public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider provider, BeanPropertyWriter writer) throws Exception 
