@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +32,45 @@ public class DaoGenericoImpl<E> implements DaoGenerico<E> {
 		return c.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<E> obtenerTodosPaginado(String entityName, String propiedad, Integer numeroPagina) {
+		Criteria c = getSession().createCriteria(entityName);
+		c.setFirstResult((numeroPagina - 1) * 5);
+		c.setMaxResults(5);
+		c.addOrder(Order.desc(propiedad));
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return c.list();
+	}
+	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<E> obtenerTodosPorPropiedad(String entityName,
-			String nombrePropiedad, Object valor) {
+	public List<E> obtenerTodosPorPropiedadPaginado(String entityName,
+			String nombrePropiedad, Object valor,  String propiedad, Integer numeroPagina) {
 		Criteria c = getSession().createCriteria(entityName);
 		c.add(Restrictions.eq(nombrePropiedad, valor));
+		c.setFirstResult((numeroPagina - 1) * 5);
+		c.setMaxResults(5);
+		c.addOrder(Order.desc(propiedad));
 		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 		return c.list();
+	}
+	
+	@Override
+	public Integer obtenerNumeroElementosPaginado(String entityName) {
+		Criteria c = getSession().createCriteria(entityName);
+		c.setProjection(Projections.rowCount());
+		return Integer.parseInt(c.uniqueResult().toString());
+	}
+
+	@Override
+	public Integer obtenerNumeroElementosPorPropiedadPaginado(
+			String entityName, String nombrePropiedad, Object valor) {
+		Criteria c = getSession().createCriteria(entityName);
+		c.add(Restrictions.eq(nombrePropiedad, valor));
+		c.setProjection(Projections.rowCount());
+		return Integer.parseInt(c.uniqueResult().toString());
 	}
 	
 	@Override

@@ -35,4 +35,34 @@ public class DetalleVenta {
 		this.cantidad = cantidad;
 	}
 	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof DetalleVenta)) {
+            return false;
+        }
+        DetalleVenta other = (DetalleVenta) obj;
+        if (detalleVentaId == null) {
+            if (other.detalleVentaId != null) {
+                return false;
+            }
+        } else if (!detalleVentaId.equals(other.detalleVentaId)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((detalleVentaId == null) ? 0 : detalleVentaId.hashCode());
+        return result;
+    }
+	
 }

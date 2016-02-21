@@ -2,7 +2,6 @@ package com.rafavillamizar.gestionventas.fachada.impl;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.rafavillamizar.gestionventas.entidad.Pagina;
 import com.rafavillamizar.gestionventas.entidad.Producto;
+import com.rafavillamizar.gestionventas.json.FiltroJsonPagina;
 import com.rafavillamizar.gestionventas.json.FiltroJsonProducto;
 import com.rafavillamizar.gestionventas.servicio.ProductoServicio;
 import com.rafavillamizar.gestionventas.util.JsonUtils;
@@ -30,12 +32,21 @@ public class ProductoFachadaImpl {
 
 	@RequestMapping(value = "/productos", method = RequestMethod.GET)
 	public @ResponseBody
-	void obtenerProductos(HttpServletResponse response)
-			throws JsonGenerationException, JsonMappingException, IOException {
-		List<Producto> productos = productoServicio.obtenerProductos();
-
-		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonProducto(),
-				productos, response);
+	void obtenerProductos(@RequestParam(value = "referencia", required = false, defaultValue = "") String referencia,
+			@RequestParam(value = "numeroPagina", required = true, defaultValue = "1") Integer numeroPagina, 
+			HttpServletResponse response)
+					throws JsonGenerationException, JsonMappingException, IOException {
+		Pagina<Producto> paginaProducto = null;
+		
+		if(numeroPagina != null && numeroPagina.compareTo(1) >= 0) {
+			if(referencia != null && !referencia.isEmpty())
+				paginaProducto = productoServicio.obtenerProductosPorPropiedadPaginado(referencia, numeroPagina);
+			else
+				paginaProducto = productoServicio.obtenerProductosPaginado(numeroPagina);
+		}
+		
+		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonPagina(),
+				paginaProducto, response);
 	}
 	
 	@RequestMapping(value = "/productos", method = RequestMethod.POST)
@@ -47,6 +58,9 @@ public class ProductoFachadaImpl {
 		producto.setProductoId(((Integer)data.get("productoId") != null) ? (Integer)data.get("productoId") : null);
 		producto.setNombre((String)data.get("nombre"));
 		producto.setPrecio((Integer)data.get("precio"));
+		producto.setReferencia((String)data.get("referencia"));
+		producto.setCaracteristicas((String)data.get("caracteristicas"));
+		producto.setImagen((String)data.get("imagen"));
 
 		productoServicio.guardarProducto(producto);
 		
@@ -60,11 +74,12 @@ public class ProductoFachadaImpl {
 		productoServicio.eliminarProducto(productoId);
 	}
 
-	private SimpleFilterProvider obtenerFiltrosJsonProducto()
+	private SimpleFilterProvider obtenerFiltrosJsonPagina()
 			throws JsonGenerationException, JsonMappingException, IOException {
 		SimpleFilterProvider filters = new SimpleFilterProvider();
+		filters.addFilter("filtroJsonPagina", new FiltroJsonPagina());
 		filters.addFilter("filtroJsonProducto", new FiltroJsonProducto());
-
+		
 		return filters;
 	}
 

@@ -12,10 +12,11 @@ public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteD
 
 	@Override
 	public List<Cliente> obtenerClientes(String nif) {
-		if(nif != null && !nif.isEmpty())
-			return obtenerTodosPorPropiedad("Cliente", "nif", nif);
-		else
-			return obtenerTodos("Cliente");
+//		if(nif != null && !nif.isEmpty())
+//			return obtenerTodosPorPropiedad("Cliente", "nif", nif);
+//		else
+//			return obtenerTodos("Cliente");
+		return null;
 	}
 
 	@Override

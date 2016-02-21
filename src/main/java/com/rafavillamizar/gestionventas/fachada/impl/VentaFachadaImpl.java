@@ -1,10 +1,12 @@
 package com.rafavillamizar.gestionventas.fachada.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Vector;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rafavillamizar.gestionventas.entidad.Cliente;
+import com.rafavillamizar.gestionventas.entidad.DetalleVenta;
+import com.rafavillamizar.gestionventas.entidad.Producto;
 import com.rafavillamizar.gestionventas.entidad.Venta;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCiudad;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCliente;
@@ -75,6 +79,60 @@ public class VentaFachadaImpl {
 		venta.setFechaVenta(date.getTime());
     	
 		ventaServicio.guardarVenta(venta);
+		
+		@SuppressWarnings("unchecked")
+		List<LinkedHashMap<String, Object>> detallesObj = (List<LinkedHashMap<String,Object>>)data.get("detalles");
+		if(detallesObj.size() > 0) {
+			List<DetalleVenta> nuevosDetallesVenta = new ArrayList<DetalleVenta>();
+			for (LinkedHashMap<String, Object> elemento : detallesObj) {
+				@SuppressWarnings("unchecked")
+				LinkedHashMap<String, Object> productoObj = (LinkedHashMap<String, Object>)elemento.get("producto");
+				Producto producto = new Producto();
+				producto.setProductoId((Integer)productoObj.get("productoId"));
+				
+				DetalleVenta detalleVenta = new DetalleVenta();
+				detalleVenta.setVentaId(venta.getVentaId());
+				detalleVenta.setDetalleVentaId(((Integer)elemento.get("detalleVentaId") != null) ? (Integer)elemento.get("detalleVentaId") : null);
+				detalleVenta.setProducto(producto);
+				detalleVenta.setCantidad((Integer)elemento.get("cantidad"));
+				nuevosDetallesVenta.add(detalleVenta);
+			}
+	        Vector<DetalleVenta> detallesVentaGuardados = new Vector<DetalleVenta>();
+	        Vector<DetalleVenta> detallesVentaParaGuardar = new Vector<DetalleVenta>();
+	        Vector<DetalleVenta> detallesVentaParaBorrar = new Vector<DetalleVenta>();
+	        List<DetalleVenta> detallesVenta = detalleVentaServicio.obtenerDetallesVenta(venta.getVentaId());
+
+	        boolean existeDetallesVenta = (detallesVenta != null && !detallesVenta.isEmpty());
+
+	        if (nuevosDetallesVenta != null && !nuevosDetallesVenta.isEmpty()) {
+	            for (DetalleVenta nuevoDetalleVenta : nuevosDetallesVenta) {
+	                if(existeDetallesVenta &&
+	                        detallesVenta.contains(nuevoDetalleVenta))
+	                    detallesVentaGuardados.add(nuevoDetalleVenta);
+	                else
+	                    detallesVentaParaGuardar.add(nuevoDetalleVenta);
+	            }
+	        }
+
+	        if(existeDetallesVenta) {
+	            for (DetalleVenta detalleVenta : detallesVenta) {
+	                if(!detallesVentaGuardados.contains(detalleVenta))
+	                    detallesVentaParaBorrar.add(detalleVenta);
+	            }
+	        }
+
+	        if(detallesVentaParaGuardar != null && !detallesVentaParaGuardar.isEmpty()) {
+	            for (DetalleVenta detalleVenta : detallesVentaParaGuardar) {
+	                detalleVentaServicio.guardarDetalleVenta(detalleVenta);
+	            }
+	        }
+
+	        if(detallesVentaParaBorrar != null && !detallesVentaParaBorrar.isEmpty()) {
+	            for (DetalleVenta detalleVenta : detallesVentaParaBorrar) {
+	            	detalleVentaServicio.eliminarDetalleVenta(detalleVenta.getDetalleVentaId());
+	            }
+	        }
+		}
 		
     	response.setStatus(HttpServletResponse.SC_CREATED);
     }

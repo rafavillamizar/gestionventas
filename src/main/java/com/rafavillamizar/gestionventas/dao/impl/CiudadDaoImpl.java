@@ -12,7 +12,8 @@ public class CiudadDaoImpl extends DaoGenericoImpl<Ciudad> implements CiudadDao 
 	
 	@Override
 	public List<Ciudad> obtenerCiudadesPorNombre(String nombre) {
-		return obtenerTodosPorPropiedad("Ciudad", "nombre", nombre);
+		//return obtenerTodosPorPropiedad("Ciudad", "nombre", nombre);
+		return null;
 	}
 
 	

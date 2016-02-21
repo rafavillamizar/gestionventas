@@ -31,7 +31,7 @@ public class DetalleVentaServicioImpl implements DetalleVentaServicio {
 	@Transactional
 	@Override
 	public void eliminarDetalleVenta(Integer detalleVentaId) {
-		// TODO Auto-generated method stub
+		detalleVentaDao.eliminarDetalleVenta(detalleVentaId);
 	}
 
 }

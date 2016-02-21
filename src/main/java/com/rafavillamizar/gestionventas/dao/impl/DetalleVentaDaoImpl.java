@@ -12,7 +12,8 @@ public class DetalleVentaDaoImpl extends DaoGenericoImpl<DetalleVenta> implement
 
 	@Override
 	public List<DetalleVenta> obtenerDetallesVenta(Integer ventaId) {
-		return obtenerTodosPorPropiedad("DetalleVenta", "ventaId", ventaId);
+		//return obtenerTodosPorPropiedad("DetalleVenta", "ventaId", ventaId);
+		return null;
 	}
 
 	@Override
@@ -21,8 +22,12 @@ public class DetalleVentaDaoImpl extends DaoGenericoImpl<DetalleVenta> implement
 	}
 
 	@Override
-	public void eliminarDetalleVenta(DetalleVenta detalleVenta) {
-		eliminar("DetalleVenta", detalleVenta);
+	public void eliminarDetalleVenta(Integer detalleVentaId) {
+		String detalleVentaEntityName = "DetalleVenta";
+		DetalleVenta detalleVenta = obtenerById(detalleVentaEntityName, detalleVentaId);
+		
+		if(detalleVenta != null)
+			eliminar(detalleVentaEntityName, detalleVenta);
 	}
 
 }

@@ -12,14 +12,21 @@
 			<generator class="identity" />
 		</id>
 		<property name="nombre" type="java.lang.String">
-			<column name="nombre" />
+			<column name="nombre" length="150"/>
 		</property>
 		<property name="imagen" type="java.lang.String">
-			<column name="imagen" />
+			<column name="imagen" length="150"/>
 		</property>
 		<property name="precio" type="java.lang.Integer">
 			<column name="precio" />
 		</property>
+		<property name="referencia" type="java.lang.String">
+			<column name="referencia" length="20"/>
+		</property>
+		<property name="caracteristicas" type="java.lang.String">
+			<column name="caracteristicas" length="600"/>
+		</property>
+		
 	</class>
 
 </hibernate-mapping>

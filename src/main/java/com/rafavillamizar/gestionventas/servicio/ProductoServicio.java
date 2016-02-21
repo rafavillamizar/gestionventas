@@ -1,12 +1,12 @@
 package com.rafavillamizar.gestionventas.servicio;
 
-import java.util.List;
-
+import com.rafavillamizar.gestionventas.entidad.Pagina;
 import com.rafavillamizar.gestionventas.entidad.Producto;
 
 public interface ProductoServicio {
 	
-	List<Producto> obtenerProductos();
+	Pagina<Producto> obtenerProductosPorPropiedadPaginado(String referencia, Integer numeroPagina);
+	Pagina<Producto> obtenerProductosPaginado(Integer numeroPagina);
 	void guardarProducto(Producto producto);
 	void eliminarProducto(Integer productoId);
 }

@@ -8,5 +8,5 @@ public interface DetalleVentaDao {
 	
     List<DetalleVenta> obtenerDetallesVenta(Integer ventaId);
     void guardarDetalleVenta(DetalleVenta detalleVenta);
-	void eliminarDetalleVenta(DetalleVenta detalleVenta);
+	void eliminarDetalleVenta(Integer detalleVentaId);
 }
