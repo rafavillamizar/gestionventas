@@ -33,6 +33,16 @@ public class ProductoDaoImpl extends DaoGenericoImpl<Producto> implements
 
 		return paginaProducto;
 	}
+	
+	@Override
+	public Pagina<Producto> obtenerProductos() {
+		Pagina<Producto> paginaProducto = new Pagina<Producto>();
+		paginaProducto.setNumeroPagina(0);
+		paginaProducto.setTotalElementos(0);
+		paginaProducto.setResultado(obtenerTodos("Producto"));
+
+		return paginaProducto;
+	}
 
 	@Override
 	public void guardarProducto(Producto producto) {

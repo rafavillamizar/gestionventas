@@ -1,18 +1,33 @@
 package com.rafavillamizar.gestionventas.dao.impl;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.rafavillamizar.gestionventas.dao.VentaDao;
+import com.rafavillamizar.gestionventas.entidad.Pagina;
 import com.rafavillamizar.gestionventas.entidad.Venta;
 
 @Repository
 public class VentaDaoImpl extends DaoGenericoImpl<Venta> implements VentaDao {
 
 	@Override
-	public List<Venta> obtenerVentas() {
-		return obtenerTodos("Venta");
+	public Pagina<Venta> obtenerVentasPaginado(Integer numeroPagina) {
+		Pagina<Venta> paginaVenta = new Pagina<Venta>();
+		paginaVenta.setNumeroPagina(numeroPagina);
+		paginaVenta.setTotalElementos(obtenerNumeroElementosPaginado("Venta"));
+		paginaVenta.setResultado(obtenerTodosPaginado("Venta",
+				"ventaId", numeroPagina));
+
+		return paginaVenta;
+	}
+
+	@Override
+	public Pagina<Venta> obtenerVentas() {
+		Pagina<Venta> paginaVenta = new Pagina<Venta>();
+		paginaVenta.setNumeroPagina(0);
+		paginaVenta.setTotalElementos(0);
+		paginaVenta.setResultado(obtenerTodos("Venta"));
+
+		return paginaVenta;
 	}
 
 	@Override
@@ -28,6 +43,5 @@ public class VentaDaoImpl extends DaoGenericoImpl<Venta> implements VentaDao {
 		if(venta != null)
 			eliminar(ventaEntityName, venta);
 	}
-	
 
 }

@@ -1,22 +1,47 @@
 package com.rafavillamizar.gestionventas.dao.impl;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import com.rafavillamizar.gestionventas.dao.ClienteDao;
 import com.rafavillamizar.gestionventas.entidad.Cliente;
+import com.rafavillamizar.gestionventas.entidad.Pagina;
+import com.rafavillamizar.gestionventas.entidad.Producto;
 
 @Repository
 public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteDao {
 
 	@Override
-	public List<Cliente> obtenerClientes(String nif) {
-//		if(nif != null && !nif.isEmpty())
-//			return obtenerTodosPorPropiedad("Cliente", "nif", nif);
-//		else
-//			return obtenerTodos("Cliente");
-		return null;
+	public Pagina<Cliente> obtenerClientesPorPropiedadPaginado(String nif,
+			Integer numeroPagina) {
+		Pagina<Cliente> paginaCliente = new Pagina<Cliente>();
+		paginaCliente.setNumeroPagina(numeroPagina);
+		paginaCliente.setTotalElementos(obtenerNumeroElementosPorPropiedadPaginado("Cliente", "nif", nif));
+		paginaCliente.setResultado(obtenerTodosPorPropiedadPaginado(
+				"Cliente", "nif", nif, "clienteId",
+				numeroPagina));
+
+		return paginaCliente;
+	}
+
+	@Override
+	public Pagina<Cliente> obtenerClientesPaginado(Integer numeroPagina) {
+		Pagina<Cliente> paginaCliente = new Pagina<Cliente>();
+		paginaCliente.setNumeroPagina(numeroPagina);
+		paginaCliente.setTotalElementos(obtenerNumeroElementosPaginado("Cliente"));
+		paginaCliente.setResultado(obtenerTodosPaginado("Cliente",
+				"clienteId", numeroPagina));
+
+		return paginaCliente;
+	}
+	
+	@Override
+	public Pagina<Cliente> obtenerClientes() {
+		Pagina<Cliente> paginaCliente = new Pagina<Cliente>();
+		paginaCliente.setNumeroPagina(0);
+		paginaCliente.setTotalElementos(0);
+		paginaCliente.setResultado(obtenerTodos("Cliente"));
+
+		return paginaCliente;
 	}
 
 	@Override
@@ -32,5 +57,5 @@ public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteD
 		if(cliente != null)
 			eliminar("Cliente", cliente);
 	}
-	
+
 }

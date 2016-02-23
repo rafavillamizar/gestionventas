@@ -54,6 +54,15 @@ public class ProductoServicioImpl implements ProductoServicio {
 		return paginaProducto;
 
 	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public Pagina<Producto> obtenerProductos() {
+		Pagina<Producto> paginaProducto = productoDao
+				.obtenerProductos();
+
+		return paginaProducto;
+	}
 
 	@Transactional
 	@Override

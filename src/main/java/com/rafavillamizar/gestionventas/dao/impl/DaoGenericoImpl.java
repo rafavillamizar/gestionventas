@@ -34,6 +34,17 @@ public class DaoGenericoImpl<E> implements DaoGenerico<E> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<E> obtenerTodosPorPropiedad(String entityName,
+			String nombrePropiedad, Object valor, String propiedad) {
+		Criteria c = getSession().createCriteria(entityName);
+		c.add(Restrictions.eq(nombrePropiedad, valor));
+		c.addOrder(Order.desc(propiedad));
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return c.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<E> obtenerTodosPaginado(String entityName, String propiedad, Integer numeroPagina) {
 		Criteria c = getSession().createCriteria(entityName);
 		c.setFirstResult((numeroPagina - 1) * 5);
@@ -97,4 +108,5 @@ public class DaoGenericoImpl<E> implements DaoGenerico<E> {
             return sessionFactory.openSession();
         }
     }
+	
 }

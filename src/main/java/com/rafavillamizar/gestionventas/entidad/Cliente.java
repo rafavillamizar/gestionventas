@@ -13,6 +13,8 @@ public class Cliente {
 	private String apellido2;
 	private String direccion;
 	private Ciudad ciudad;
+	
+	private String nombreCompleto;
 
 	public Integer getClienteId() {
 		return clienteId;
@@ -61,6 +63,15 @@ public class Cliente {
 	}
 	public void setCiudad(Ciudad ciudad) {
 		this.ciudad = ciudad;
+	}
+	public String getNombreCompleto() {
+		if(!nif.isEmpty() && !nombre.isEmpty() && !apellido1.isEmpty())
+			return "(" + nif + ") " + nombre + " " + apellido1;
+		
+		return nombreCompleto;
+	}
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
 	
 }

@@ -14,6 +14,7 @@ public class Producto {
     
     //Propiedades no mapeadas
     private String imagenUrl;
+    private String nombreCompleto;
     
 	public Integer getProductoId() {
 		return productoId;
@@ -56,6 +57,15 @@ public class Producto {
 	}
 	public void setImagenUrl(String imagenUrl) {
 		this.imagenUrl = imagenUrl;
+	}
+	public String getNombreCompleto() {
+		if(!referencia.isEmpty() && !nombre.isEmpty())
+			return "(" + referencia + ") " + nombre;
+		
+		return nombreCompleto;
+	}
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
 	}
     
 }

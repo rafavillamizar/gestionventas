@@ -38,7 +38,7 @@ public class JsonUtils {
 	
 	public static Date getDateFromJson(String date) throws ParseException
 	{
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		return formatter.parse(date);
 	}
 

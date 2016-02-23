@@ -2,7 +2,6 @@ package com.rafavillamizar.gestionventas.fachada.impl;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rafavillamizar.gestionventas.entidad.Ciudad;
 import com.rafavillamizar.gestionventas.entidad.Cliente;
+import com.rafavillamizar.gestionventas.entidad.Pagina;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCiudad;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCliente;
+import com.rafavillamizar.gestionventas.json.FiltroJsonPagina;
 import com.rafavillamizar.gestionventas.servicio.ClienteServicio;
 import com.rafavillamizar.gestionventas.util.JsonUtils;
 
@@ -33,13 +34,22 @@ public class ClienteFachadaImpl {
 
 	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
 	public @ResponseBody
-	void obtenerProductos(@RequestParam(value = "nif", required = false, defaultValue = "") String nif, 
+	void obtenerClientes(@RequestParam(value = "nif", required = false, defaultValue = "") String nif, 
+			@RequestParam(value = "numeroPagina", required = false, defaultValue = "0") Integer numeroPagina,  
 			HttpServletResponse response)
 			throws JsonGenerationException, JsonMappingException, IOException {
-		List<Cliente> clientes = clienteServicio.obtenerClientes(nif);
-
-		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonCliente(),
-				clientes, response);
+		Pagina<Cliente> paginaCliente = null;
+		
+		if(numeroPagina != null && numeroPagina.compareTo(1) >= 0) {
+			if(nif != null && !nif.isEmpty())
+				paginaCliente = clienteServicio.obtenerClientesPorPropiedadPaginado(nif, numeroPagina);
+			else
+				paginaCliente = clienteServicio.obtenerClientesPaginado(numeroPagina);
+		} else
+			paginaCliente = clienteServicio.obtenerClientes();
+		
+		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonPagina(),
+				paginaCliente, response);
 	}
 	
 	@RequestMapping(value = "/clientes", method = RequestMethod.POST)
@@ -75,12 +85,13 @@ public class ClienteFachadaImpl {
 		clienteServicio.eliminarCliente(clienteId);
 	}
 	
-	private SimpleFilterProvider obtenerFiltrosJsonCliente()
+	private SimpleFilterProvider obtenerFiltrosJsonPagina()
 			throws JsonGenerationException, JsonMappingException, IOException {
 		SimpleFilterProvider filters = new SimpleFilterProvider();
+		filters.addFilter("filtroJsonPagina", new FiltroJsonPagina());
 		filters.addFilter("filtroJsonCliente", new FiltroJsonCliente());
 		filters.addFilter("filtroJsonCiudad", new FiltroJsonCiudad());
-
+		
 		return filters;
 	}
 

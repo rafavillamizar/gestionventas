@@ -6,6 +6,6 @@ import com.rafavillamizar.gestionventas.entidad.Ciudad;
 
 public interface CiudadDao {
 	
-    List<Ciudad> obtenerCiudadesPorNombre(String nombre);
+    List<Ciudad> obtenerCiudades();
 
 }

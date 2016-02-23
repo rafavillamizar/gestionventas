@@ -33,7 +33,7 @@ public class ProductoFachadaImpl {
 	@RequestMapping(value = "/productos", method = RequestMethod.GET)
 	public @ResponseBody
 	void obtenerProductos(@RequestParam(value = "referencia", required = false, defaultValue = "") String referencia,
-			@RequestParam(value = "numeroPagina", required = true, defaultValue = "1") Integer numeroPagina, 
+			@RequestParam(value = "numeroPagina", required = false, defaultValue = "0") Integer numeroPagina, 
 			HttpServletResponse response)
 					throws JsonGenerationException, JsonMappingException, IOException {
 		Pagina<Producto> paginaProducto = null;
@@ -43,7 +43,8 @@ public class ProductoFachadaImpl {
 				paginaProducto = productoServicio.obtenerProductosPorPropiedadPaginado(referencia, numeroPagina);
 			else
 				paginaProducto = productoServicio.obtenerProductosPaginado(numeroPagina);
-		}
+		} else
+			paginaProducto = productoServicio.obtenerProductos();
 		
 		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonPagina(),
 				paginaProducto, response);

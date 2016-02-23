@@ -1,9 +1,8 @@
 package com.rafavillamizar.gestionventas.fachada.impl;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Vector;
@@ -19,15 +18,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rafavillamizar.gestionventas.entidad.Cliente;
 import com.rafavillamizar.gestionventas.entidad.DetalleVenta;
+import com.rafavillamizar.gestionventas.entidad.Pagina;
 import com.rafavillamizar.gestionventas.entidad.Producto;
 import com.rafavillamizar.gestionventas.entidad.Venta;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCiudad;
 import com.rafavillamizar.gestionventas.json.FiltroJsonCliente;
 import com.rafavillamizar.gestionventas.json.FiltroJsonDetalleVenta;
+import com.rafavillamizar.gestionventas.json.FiltroJsonPagina;
 import com.rafavillamizar.gestionventas.json.FiltroJsonProducto;
 import com.rafavillamizar.gestionventas.json.FiltroJsonVenta;
 import com.rafavillamizar.gestionventas.servicio.DetalleVentaServicio;
@@ -45,18 +47,24 @@ public class VentaFachadaImpl {
 
 	@RequestMapping(value = "/ventas", method = RequestMethod.GET)
 	public @ResponseBody
-	void obtenerProductos(HttpServletResponse response)
+	void obtenerProductos(@RequestParam(value = "numeroPagina", required = false, defaultValue = "0") Integer numeroPagina, 
+			HttpServletResponse response)
 			throws JsonGenerationException, JsonMappingException, IOException {
-		List<Venta> ventas = ventaServicio.obtenerVentas();
+		Pagina<Venta> paginaVenta = null;
 		
-		if(ventas != null && ventas.size() > 0) {
-			for (Venta venta : ventas) {
+		if(numeroPagina != null && numeroPagina.compareTo(1) >= 0) {
+			paginaVenta = ventaServicio.obtenerVentasPaginado(numeroPagina);
+		} else
+			paginaVenta = ventaServicio.obtenerVentas();
+		
+		if(paginaVenta != null && paginaVenta.getResultado() != null && paginaVenta.getResultado().size() > 0) {
+			for (Venta venta : paginaVenta.getResultado()) {
 				venta.setDetalles(detalleVentaServicio.obtenerDetallesVenta(venta.getVentaId()));
 			}
 		}
 
 		JsonUtils.putJsonDataInResponse(obtenerFiltrosJsonVenta(),
-				ventas, response);
+				paginaVenta, response);
 	}
 	
 	@RequestMapping(value = "/ventas", method = RequestMethod.POST)
@@ -74,9 +82,11 @@ public class VentaFachadaImpl {
 		
 		venta.setCliente(cliente);
 		
-		Calendar date = GregorianCalendar.getInstance();
-		date.setTimeInMillis((Long)data.get("fechaVenta"));
-		venta.setFechaVenta(date.getTime());
+		try {
+			venta.setFechaVenta(JsonUtils.getDateFromJson((String)data.get("fechaVenta")));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
     	
 		ventaServicio.guardarVenta(venta);
 		
@@ -147,6 +157,7 @@ public class VentaFachadaImpl {
 	private SimpleFilterProvider obtenerFiltrosJsonVenta()
 			throws JsonGenerationException, JsonMappingException, IOException {
 		SimpleFilterProvider filters = new SimpleFilterProvider();
+		filters.addFilter("filtroJsonPagina", new FiltroJsonPagina());
 		filters.addFilter("filtroJsonVenta", new FiltroJsonVenta());
 		filters.addFilter("filtroJsonCliente", new FiltroJsonCliente());
 		filters.addFilter("filtroJsonCiudad", new FiltroJsonCiudad());
