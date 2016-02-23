@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.rafavillamizar.gestionventas.dao.ClienteDao;
 import com.rafavillamizar.gestionventas.entidad.Cliente;
 import com.rafavillamizar.gestionventas.entidad.Pagina;
-import com.rafavillamizar.gestionventas.entidad.Producto;
 
 @Repository
 public class ClienteDaoImpl extends DaoGenericoImpl<Cliente> implements ClienteDao {
