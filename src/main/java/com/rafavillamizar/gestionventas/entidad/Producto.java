@@ -9,7 +9,7 @@ public class Producto {
 	private String referencia;
     private String nombre;
     private String imagen;
-    private Integer precio;
+    private Double precio;
     private String caracteristicas;
     
     //Propiedades no mapeadas
@@ -40,10 +40,10 @@ public class Producto {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-	public Integer getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(Integer precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 	public String getCaracteristicas() {

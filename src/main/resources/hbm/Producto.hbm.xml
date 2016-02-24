@@ -17,7 +17,7 @@
 		<property name="imagen" type="java.lang.String">
 			<column name="imagen" length="150"/>
 		</property>
-		<property name="precio" type="java.lang.Integer">
+		<property name="precio" type="java.lang.Double">
 			<column name="precio" />
 		</property>
 		<property name="referencia" type="java.lang.String">

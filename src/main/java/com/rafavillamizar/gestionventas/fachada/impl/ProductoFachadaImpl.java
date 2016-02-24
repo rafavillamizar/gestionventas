@@ -58,7 +58,7 @@ public class ProductoFachadaImpl {
 		Producto producto = new Producto();
 		producto.setProductoId(((Integer)data.get("productoId") != null) ? (Integer)data.get("productoId") : null);
 		producto.setNombre((String)data.get("nombre"));
-		producto.setPrecio((Integer)data.get("precio"));
+		producto.setPrecio((data.get("precio") instanceof Integer) ? (Integer)data.get("precio") * 1.0 : (Double)data.get("precio"));
 		producto.setReferencia((String)data.get("referencia"));
 		producto.setCaracteristicas((String)data.get("caracteristicas"));
 		producto.setImagen((String)data.get("imagen"));
