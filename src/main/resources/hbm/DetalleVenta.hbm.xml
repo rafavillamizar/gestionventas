@@ -19,5 +19,57 @@
 			<column name="cantidad" />
 		</property>
 	</class>
+	
+	<sql-query name="obtenerInformePorMesYAnioPaginado">
+		<return-scalar column="nombreCompleto" type="java.lang.String"/>
+		<return-scalar column="unidadesVendidas" type="java.lang.Integer"/>
+		<return-scalar column="ventasMes" type="java.lang.Double"/>
+		SELECT 
+			CONCAT('(', p.referencia, ')', p.nombre) AS nombreCompleto, 
+			SUM(dv.cantidad) AS unidadesVendidas, 
+			SUM(p.precio) AS ventasMes 
+		FROM 
+			detalleventa dv 
+		INNER JOIN 
+			producto p 
+		ON 
+			dv.productoId = p.productoId 
+		INNER JOIN 
+			venta v 
+		ON 
+			dv.ventaId = v.ventaId 
+		WHERE 
+			MONTH(v.fechaVenta) = :mes 
+		AND 
+			YEAR(v.fechaVenta) = :anio 
+		GROUP BY 
+			dv.productoId
+		LIMIT 
+			:inicio, :fin
+	</sql-query>
+	
+	<sql-query name="obtenerTotalInformePorMesYAnio">
+		SELECT COUNT(*)
+		FROM
+		(SELECT 
+			dv.productoId 
+		FROM 
+			detalleventa dv 
+		INNER JOIN 
+			producto p 
+		ON 
+			dv.productoId = p.productoId 
+		INNER JOIN 
+			venta v 
+		ON 
+			dv.ventaId = v.ventaId 
+		WHERE 
+			MONTH(v.fechaVenta) = :mes 
+		AND 
+			YEAR(v.fechaVenta) = :anio
+		GROUP BY 
+			dv.productoId)
+		as row_count
+	</sql-query>
 
 </hibernate-mapping>
